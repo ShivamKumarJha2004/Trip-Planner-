@@ -1,25 +1,3 @@
-# Trip Planner Backend API
-
-
-A high-performance backend API for trip management applications, built with Fastify, TypeScript, and MongoDB.
-
-## Features
-
-- 🚀 **Fastify** for blazing fast performance
-- 🔒 **Type-safe** with TypeScript
-- ✅ **Request validation** using Zod
-- 🗄️ **MongoDB** for flexible data storage
-- 🌐 **CORS enabled** for frontend integration
-
-## API Endpoints
-
-| Method | Endpoint          | Description                  |
-|--------|-------------------|------------------------------|
-| GET    | `/api/trips`      | Get all trips                |
-| GET    | `/api/trips/:id`  | Get a specific trip          |
-| POST   | `/api/trips`      | Create a new trip            |
-| PUT    | `/api/trips/:id`  | Update an existing trip      |
-| DELETE | `/api/trips/:id`  | Delete a trip                |
 
 ## Getting Started
 
@@ -60,6 +38,15 @@ PORT=3001
 3. npm run dev (backend server is started)
 
 
+## API Endpoints
+
+| Method | Endpoint          | Description                  |
+|--------|-------------------|------------------------------|
+| GET    | `/api/trips`      | Get all trips                |
+| GET    | `/api/trips/:id`  | Get a specific trip          |
+| POST   | `/api/trips`      | Create a new trip            |
+| PUT    | `/api/trips/:id`  | Update an existing trip      |
+| DELETE | `/api/trips/:id`  | Delete a trip                |
 
 
 
