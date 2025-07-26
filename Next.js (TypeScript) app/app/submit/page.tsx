@@ -10,20 +10,34 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function SubmitTrip() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, isLoading, router]);
   
   const handleSubmit = async (tripData: Omit<Trip, "_id" | "createdAt">) => {
     await createTrip(tripData);
   };
 
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
+  // If user is not logged in, don't render the form
+  if (!user) {
+    return null; // This will not be shown as the user will be redirected to login
+  }
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 relative overflow-hidden">
       {/* Background decorative elements */}

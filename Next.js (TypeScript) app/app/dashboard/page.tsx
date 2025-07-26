@@ -2,6 +2,8 @@
 import TripCard from "../../components/TripCard";
 import { getTrips, Trip, TripFilters, PaginatedResponse } from "../../lib/api";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
@@ -24,6 +26,15 @@ export default function Dashboard() {
   });
   const [maxBudgetValue, setMaxBudgetValue] = useState<number>(50000);
   const [debouncedDestination, setDebouncedDestination] = useState('');
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isLoading, router]);
 
   // Calculate total pages
   const totalPages = Math.ceil(tripData.total / (filters.limit || 6));
@@ -54,6 +65,20 @@ export default function Dashboard() {
     fetchTrips();
   }, [filters]);
 
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
+  // If user is not logged in, don't render the dashboard
+  if (!user) {
+    return null; // This will not be shown as the user will be redirected to login
+  }
+  
   return (
     <div className="container mx-auto px-4 py-6 max-w-7xl">
       {/* Breadcrumb */}

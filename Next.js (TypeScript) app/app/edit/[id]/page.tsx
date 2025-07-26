@@ -16,15 +16,15 @@ export default function EditTrip({ params }: { params: { id: string } }) {
   
   const [trip, setTrip] = useState<Trip | null>(null);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
   
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) {
+    if (!isLoading && !user) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, isLoading, router]);
   
   // Fetch trip data
   useEffect(() => {
@@ -43,6 +43,20 @@ export default function EditTrip({ params }: { params: { id: string } }) {
     fetchTrip();
   }, [tripId]); // Use unwrapped tripId as dependency
 
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
+  // If user is not logged in, don't render the form
+  if (!user) {
+    return null; // This will not be shown as the user will be redirected to login
+  }
+  
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-12 flex justify-center items-center">

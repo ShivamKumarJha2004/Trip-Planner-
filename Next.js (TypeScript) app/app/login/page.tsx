@@ -8,8 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { LogIn, AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-
+import { Toaster } from 'sonner';
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,10 +56,10 @@ export default function LoginPage() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <Alert variant="destructive" className="mb-4">
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
+             <div className="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50">
+               <AlertCircle className="h-4 w-4 mr-2" />
+               <span>{error}</span>
+             </div>
             )}
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>

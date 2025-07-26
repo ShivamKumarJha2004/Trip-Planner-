@@ -1,8 +1,51 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, MapPin, Calendar, DollarSign } from "lucide-react";
+import { ArrowRight, MapPin, Calendar, DollarSign, LogIn } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!isLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isLoading, router]);
+  
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+  
+  // If user is not logged in, show login prompt
+  if (!user) {
+    return (
+      <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen flex flex-col items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8 text-center">
+          <h1 className="text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Welcome to TripPlanner</h1>
+          <p className="text-gray-600 mb-8">Please log in to access your trips and plan new adventures.</p>
+          <Link
+            href="/login"
+            className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 text-lg font-medium transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center w-full"
+          >
+            <LogIn className="mr-2 h-5 w-5" />
+            Login to Continue
+          </Link>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
