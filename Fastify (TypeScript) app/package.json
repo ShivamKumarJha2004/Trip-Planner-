@@ -1,0 +1,25 @@
+{
+  "name": "trip_planner",
+  "version": "1.0.0",
+  "description": "Trip planning application",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "@fastify/mongodb": "^9.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "fastify": "^5.4.0",
+    "fastify-type-provider-zod": "^5.0.2",
+    "sonner": "^2.0.6",
+    "zod": "^4.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
